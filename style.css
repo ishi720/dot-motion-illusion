@@ -1,0 +1,220 @@
+:root {
+    --paper: #e7eaee;
+    --panel: #f4f6f8;
+    --ink: #15181d;
+    --muted: #566070;
+    --line: #c9cfd8;
+    --accent: #f08a24;
+    --font: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Meiryo", system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.top,
+main {
+    width: min(1180px, 100% - 40px);
+    margin-inline: auto;
+}
+
+/* ---------- タイトル ---------- */
+.top { padding: 36px 0 28px; }
+
+.title {
+    margin: 0;
+    font-size: clamp(2rem, 1.2rem + 3.4vw, 3.5rem);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* i の点だけをアクセント色で塗る(文字の上部だけ色を変え、文字の形で切り抜く) */
+.i-dot {
+    background: linear-gradient(to bottom, var(--accent) 0 44%, var(--ink) 44% 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ---------- デモ本体 ---------- */
+.app {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 28px;
+    align-items: start;
+}
+
+.stage {
+    position: sticky;
+    top: 20px;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--ink);
+}
+
+.stage canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    min-height: 280px;
+}
+
+.stage-note {
+    position: absolute;
+    left: 12px;
+    bottom: 10px;
+    margin: 0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ---------- 設定パネル ---------- */
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 18px 14px;
+}
+
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn {
+    font: inherit;
+    font-size: 14px;
+    line-height: 1;
+    padding: 11px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+.btn:hover { background: rgba(21, 24, 29, 0.07); }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--ink); color: var(--panel); }
+.btn-primary:hover { background: #2b3038; }
+
+.group {
+    margin: 16px 0 0;
+    padding: 0;
+    border: 0;
+}
+.group legend {
+    padding: 0;
+    margin-bottom: 4px;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.field {
+    display: grid;
+    grid-template-columns: 7.5em minmax(0, 1fr) 3.2em;
+    align-items: center;
+    gap: 10px;
+    min-height: 36px;
+}
+.field label { font-size: 14px; color: var(--muted); }
+.field output {
+    text-align: right;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* スライダー */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 22px;
+    background: transparent;
+    margin: 0;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 2px;
+    background: var(--ink);
+    border-radius: 1px;
+}
+input[type="range"]::-moz-range-track {
+    height: 2px;
+    background: var(--ink);
+    border-radius: 1px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    margin-top: -8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 1.5px solid var(--ink);
+}
+input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 1.5px solid var(--ink);
+}
+
+:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+}
+
+/* 色 */
+.colors { display: flex; gap: 10px; padding-top: 6px; }
+.swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+}
+.swatch input[type="color"] {
+    width: 64px;
+    height: 36px;
+    padding: 2px;
+    border: 1px solid var(--ink);
+    border-radius: 6px;
+    background: var(--panel);
+    cursor: pointer;
+}
+
+.status {
+    min-height: 1.6em;
+    margin: 8px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* ---------- レスポンシブ ---------- */
+@media (max-width: 900px) {
+    .app { grid-template-columns: minmax(0, 1fr); }
+    .stage { position: relative; }
+}
+
+@media (max-width: 480px) {
+    .field { grid-template-columns: 6.5em minmax(0, 1fr) 3em; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+}
